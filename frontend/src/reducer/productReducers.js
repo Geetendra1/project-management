@@ -31,12 +31,14 @@ function productListReducer(state = { products: [] }, action) {
   }
 }
 
-function productDetailsReducer(state = { tasks: [] }, action) {
+function productDetailsReducer(state = { project : { tasks: [] } }, action) {
   switch (action.type) {
     case PRODUCT_DETAILS_REQUEST:
-      return { loading: true , tasks: []};
+      return { loading: true };
+      
     case PRODUCT_DETAILS_SUCCESS:
-      return { loading: false, tasks: action.payload };
+      return { loading: false, project: action.payload };
+      console.log( "task",action.payload );
     case PRODUCT_DETAILS_FAIL:
       return { loading: false, error: action.payload };
     default:

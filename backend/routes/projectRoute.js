@@ -128,25 +128,25 @@ router.get("/" , async (req,res) => {
 
 
 // GET PROJECT BY ID
-// router.get('/:id',  async (req,res) => {
-//   const project = await Project.findOne({_id:req.params.id}).populate('tasks');
-//   if(project) {
-//     res.send(project);
-//     console.log(project);
-//   } else {
-//         res.status(404).send({ message: 'Product Not Found.' });
-//   }
-// })
-
 router.get('/:id',  async (req,res) => {
-  const task = await Task.find({projectId:req.params.id}).populate('projects');
-  if(task) {
-  res.send(task)
-  console.log(task);
+  const project = await Project.findOne({_id:req.params.id}).populate('tasks');
+  if(project) {
+    res.send(project);
+    console.log(project);
   } else {
         res.status(404).send({ message: 'Product Not Found.' });
   }
 })
+
+// router.get('/:id',  async (req,res) => {
+//   const task = await Task.find({projectId:req.params.id}).populate('projects');
+//   if(task) {
+//   res.send(task)
+//   console.log(task);
+//   } else {
+//         res.status(404).send({ message: 'Product Not Found.' });
+//   }
+// })
 
 // DELETE PROJECT
 router.delete('/:id', isAuth , isAdmin, async (req,res) => {

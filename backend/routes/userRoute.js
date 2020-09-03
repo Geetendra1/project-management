@@ -7,6 +7,13 @@ const templates = require('../email/email.templates')
 const router = express.Router()
 const moment = require("moment");
 
+
+
+router.get('/' , async (req, res) => {
+  const users = await User.find({},{name:1})
+  res.send(users)
+})
+
 // ----------------- LOGIN USER --------------------//
 router.post('/signin', async (req, res) => {
   const signinUser = await User.findOne({

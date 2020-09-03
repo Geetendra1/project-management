@@ -1,6 +1,7 @@
 import React,{useEffect,useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {detailsProduct} from '../actions/productActions'
+import {listUsers} from '../actions/UserActions'
 import { FiPower, FiTrash2 } from 'react-icons/fi';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { Link } from "react-router-dom";
@@ -10,7 +11,10 @@ function TaskScreen (props) {
     const userSignin = useSelector(state=> state.userSignin);
     const productDetails = useSelector(state => state.productDetails)
     const {userInfo} = userSignin
-    const {tasks,loading,error} = productDetails;
+    const {project,loading,error} = productDetails;
+    const userList = useSelector(state => state.userList)
+    const {users} = userList
+    console.log(users);
     const projectid = props.match.params.id
     
     const [modalVisible ,setModalVisible] = useState(false);
@@ -26,7 +30,7 @@ function TaskScreen (props) {
     error: errorSave,
   } = taskSave;
 
-    const taskDelete = useSelector((state) => state.taskDelete);
+  const taskDelete = useSelector((state) => state.taskDelete);
   const {
     loading: loadingDelete,
     success: successDelete,
@@ -40,7 +44,7 @@ function TaskScreen (props) {
       setModalVisible(false);
     }
       dispatch(detailsProduct(props.match.params.id))
-     
+      dispatch(listUsers())
       return () => {
         // 
       }
@@ -127,19 +131,19 @@ function TaskScreen (props) {
 
       <div className="profile-container">
 
-      <h1>Listed Tasks</h1>
+      <h1>Listed Tasks of {project.name}</h1>
 
       <ul>
-        {tasks.map(task => (
+        {project.tasks.map(task => (
           <li key={task._id} >
 
             <strong>NAME:</strong>
-            <p>{task.projectId}</p>
+            <p>{task.name}</p>
 
             <strong>DESCRIPTION:</strong>
             <p>{task.description}</p>
 
-          { userInfo && userInfo.isAdmin && (
+        { userInfo && userInfo.isAdmin && (
             <button  type="button"  onClick={() => deleteHandler(task)}>
               <FiTrash2 size={20} color="#a8a8b3" />
             </button>
@@ -147,11 +151,12 @@ function TaskScreen (props) {
 
             {/*  Navigate to tasks */}
              {/* <div style={{display:"flex"}}>
-              <AiOutlineArrowRight size={20} color="#e02041" />  <Link to={"/product/" + task._id} color="#e02041"> Details for this project </Link>
+              <AiOutlineArrowRight size={20} color="#e02041" />  <Link to={"/product/" + task._id} color="#e02041"> Tasks for this project </Link>
             </div> */}
           </li>  
         ))}
       </ul>
+
     </div>
      </div>
 }

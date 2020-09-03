@@ -1,7 +1,22 @@
 import {USER_SIGNIN_REQUEST,USER_SIGNIN_SUCCESS,USER_SIGNIN_FAIL,
 USER_LOGOUT,USER_REGISTER_REQUEST,USER_REGISTER_SUCCESS,USER_REGISTER_FAIL,
-USER_UPDATE_REQUEST,USER_UPDATE_SUCCESS,USER_UPDATE_FAIL
+USER_UPDATE_REQUEST,USER_UPDATE_SUCCESS,USER_UPDATE_FAIL,
+  USERS_LIST_REQUEST,USERS_LIST_SUCCESS,USERS_LIST_FAIL
+
 } from '../constants/userConstants'
+
+function userListReducer(state = { users: [] }, action) {
+  switch (action.type) {
+    case USERS_LIST_REQUEST:
+      return { loading: true, };
+    case USERS_LIST_SUCCESS:
+      return { loading: false, users: action.payload };
+    case USERS_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+}
 
 
 function userSigninReducer(state = {}, action) {
@@ -44,4 +59,4 @@ function userUpdateReducer(state = {}, action) {
 }
 
 
-export {userSigninReducer,userRegisterReducer,userUpdateReducer}
+export {userSigninReducer,userRegisterReducer,userUpdateReducer,userListReducer}
