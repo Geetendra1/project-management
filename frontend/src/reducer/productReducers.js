@@ -30,12 +30,13 @@ function productListReducer(state = { products: [] }, action) {
       return state;
   }
 }
-function productDetailsReducer(state = { product: { } }, action) {
+
+function productDetailsReducer(state = { tasks: [] }, action) {
   switch (action.type) {
     case PRODUCT_DETAILS_REQUEST:
-      return { loading: true };
+      return { loading: true , tasks: []};
     case PRODUCT_DETAILS_SUCCESS:
-      return { loading: false, product: action.payload };
+      return { loading: false, tasks: action.payload };
     case PRODUCT_DETAILS_FAIL:
       return { loading: false, error: action.payload };
     default:

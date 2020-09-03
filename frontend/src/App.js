@@ -86,9 +86,7 @@ const  closeMenu = () =>  {
       <Route path="/shipping" component={ShippingScreen} />
       <Route path="/profile" component={ProfileScreen} />
       <Route path="/orders" component={OrdersScreen} />
-
       </div>
-
     </main>
     <footer className="footer">
       All right reserved.

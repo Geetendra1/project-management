@@ -1,5 +1,6 @@
 import express from 'express';
 import Project from '../modals/projectModals'
+import Task from '../modals/taskModal'
 import { isAuth, isAdmin } from '../util';
 const cookieParser = require('cookie-parser')
 const router = express.Router();
@@ -127,14 +128,23 @@ router.get("/" , async (req,res) => {
 
 
 // GET PROJECT BY ID
+// router.get('/:id',  async (req,res) => {
+//   const project = await Project.findOne({_id:req.params.id}).populate('tasks');
+//   if(project) {
+//     res.send(project);
+//     console.log(project);
+//   } else {
+//         res.status(404).send({ message: 'Product Not Found.' });
+//   }
+// })
+
 router.get('/:id',  async (req,res) => {
-  const project = await Project.findOne({_id:req.params.id});
-  if(project) {
-    res.send(project);
-    console.log(project.tasks);
+  const task = await Task.find({projectId:req.params.id}).populate('projects');
+  if(task) {
+  res.send(task)
+  console.log(task);
   } else {
         res.status(404).send({ message: 'Product Not Found.' });
-
   }
 })
 
