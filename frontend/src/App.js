@@ -3,7 +3,7 @@ import './App.css';
 import { BrowserRouter, Route , Link } from "react-router-dom";
 import {useSelector} from 'react-redux'
 import HomeScreen from './screens/HomeScreen'
-import ProductScreen from './screens/ProductScreen'
+import TaskScreen from './screens/TaskScreen'
 import ProductsScreen from './screens/ProductsScreen'
 import CartScreen from './screens/CartScreen'
 import SigninScreen from './screens/SigninScreen'
@@ -81,7 +81,7 @@ const  closeMenu = () =>  {
       <Route path="/payment" component={PaymentScreen} />
       <Route path="/signin" component={SigninScreen} />
       <Route path="/register" component={RegisterScreen} />
-      <Route path="/product/:id" component={ProductScreen} />
+      <Route path="/product/:id" component={TaskScreen} />
       <Route path="/cart/:id?" component={CartScreen} />
       <Route path="/shipping" component={ShippingScreen} />
       <Route path="/profile" component={ProfileScreen} />

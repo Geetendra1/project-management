@@ -71,18 +71,18 @@ a:hover{
   flex-wrap: wrap;
 }
 
-.profile-container header {
+.project-header {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
 }
 
-.profile-container  header span {
+.project-header{
   font-size: 20px;
   
 }
 
-.profile-container header img {
+.project-image {
   height: 64px;
 }
 
@@ -93,12 +93,14 @@ a:hover{
 }
 .profile-button {
   height: 60px;
+  width: 220px;
   background: #e02041;
   border: 0;
   border-radius: 8px;
   color: #fff;
   font-weight: 700;
   margin-top: 16px;
+  margin-left: auto;
   display: inline-block;
   text-align: center;
   text-decoration: none;
@@ -113,7 +115,7 @@ a:hover{
 }
 .profile-container header button { 
   height: 60px;
-  width: 60px;
+  width: 70px;
   border-radius: 4px;
   border: 1px solid #dcdce6;
   background: transparent;
@@ -342,7 +344,7 @@ a:hover{
 .form-container {
   display: flex;
   flex-direction: column;
-  width: 32rem;
+  width: 50rem;
   padding: 2rem;
   border: 0.1rem #c0c0c0 solid;
   border-radius: 0.5rem;

@@ -1,110 +1,100 @@
-import React,{ useEffect, useHistory, useState} from 'react';
-import { Link } from "react-router-dom";
-import {Modal} from 'react-bootstrap'
+import React,{useEffect,useState} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import {detailsProduct} from '../actions/productActions'
 import { FiPower, FiTrash2 } from 'react-icons/fi';
 import { AiOutlineArrowRight } from 'react-icons/ai';
-import {useSelector, useDispatch} from "react-redux";
-import {listProducts,saveProduct,deleteProduct,} from '../actions/productActions' 
+import { Link } from "react-router-dom";
 import logoImg from '../assets/logo.svg';
+import {saveTask,deleteTask} from '../actions/TaskActions'
+function TaskScreen (props) {
+    const userSignin = useSelector(state=> state.userSignin);
+    const productDetails = useSelector(state => state.productDetails)
+    const {userInfo} = userSignin
+    const {tasks,loading,error} = productDetails;
+    const projectid = props.match.params.id
+    
+    const [modalVisible ,setModalVisible] = useState(false);
+    const [id, setId] = useState('');
+    const [projectId, setProjectId] = useState('');
+    const [description, setDescription] = useState('');
 
-
-function HomeScreen(props) {
-const productList = useSelector(state => state.productList)
-const userSignin = useSelector(state=> state.userSignin);
-const {userInfo} = userSignin
-const {products, loading, error} = productList;
-const [modalVisible ,setModalVisible] = useState(false);
-const [id, setId] = useState('');
-const [name, setName] = useState('');
-const [description, setDescription] = useState('');
-const [uploading, setUploading] = useState(false);
-
-const productSave = useSelector((state) => state.productSave);
-  const {
+    
+    const taskSave = useSelector((state) => state.taskSave);
+    const {
     loading: loadingSave,
     success: successSave,
     error: errorSave,
-  } = productSave;
+  } = taskSave;
 
-const productDelete = useSelector((state) => state.productDelete);
+    const taskDelete = useSelector((state) => state.taskDelete);
   const {
     loading: loadingDelete,
     success: successDelete,
     error: errorDelete,
-  } = productDelete;
+  } = taskDelete;
+    
+    const dispatch = useDispatch();
 
-const dispatch  = useDispatch()
-
-  useEffect(() => {
-  if (successSave) {
+    useEffect(() => {
+        if (successSave) {
       setModalVisible(false);
     }
-    dispatch(listProducts())
-    return () => {
-      //
-    };
-  }, [successSave,successDelete]);
+      dispatch(detailsProduct(props.match.params.id))
+     
+      return () => {
+        // 
+      }
+    }, [successSave,successDelete])
 
     function handleLogout() {
     localStorage.clear();
     this.props.history.push('/');
   }
 
-
-const openModal = (project) => {
+  const openModal = (task) => {
   setModalVisible(true);
-  setId(project._id);
-  setName(project.name);
-  setDescription(project.description);
+  setProjectId(projectid);
+  setId(task._id);
+  setDescription(task.description);
 }
 
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(
-      saveProduct({
+      saveTask({
         _id: id,
-        name,
+        projectId,
         description,
       })
     );
   };
 
-  const deleteHandler = (product) => {
-    dispatch(deleteProduct(product._id));
+    const deleteHandler = (task) => {
+    dispatch(deleteTask(task._id));
   };
 
-    return loading ? <div>Loading...</div> :
+
+  return loading ? <div>Loading...</div> :
     error ? <div>{error}</div> :
     <div >
       <header className="project-header">
         <img className="project-image" src={logoImg} alt="Be The Hero"/>
         { userInfo && userInfo.isAdmin && (
                 <Link className="profile-button" onClick={() => openModal({})}>
-                  Create project
+                  Create Tasks
                 </Link>
         )}
       </header>
-      
-      {modalVisible && (
+            {modalVisible && (
         <div className="form">
           <form onSubmit={submitHandler}>
             <ul className="form-container">
               <li>
-                <h2>Create Project </h2>
+                <h2>Create Task </h2>
               </li>
               <li>
                 {loadingSave && <div>Loading...</div>}
                 {errorSave && <div>{errorSave}</div>}
-              </li>
-              <li>
-                <label htmlFor="name">Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={name}
-                  id="name"
-                  onChange={(e) => setName(e.target.value)}
-                ></input>
               </li>
               
               <li>
@@ -136,32 +126,33 @@ const openModal = (project) => {
       )}
 
       <div className="profile-container">
-      <h1>Listed project</h1>
+
+      <h1>Listed Tasks</h1>
+
       <ul>
-        {products.map(product => (
-          <li key={product._id} >
+        {tasks.map(task => (
+          <li key={task._id} >
 
             <strong>NAME:</strong>
-            <p>{product.name}</p>
+            <p>{task.projectId}</p>
 
             <strong>DESCRIPTION:</strong>
-            <p>{product.description}</p>
+            <p>{task.description}</p>
 
-        { userInfo && userInfo.isAdmin && (
-            <button  type="button"  onClick={() => deleteHandler(product)}>
+          { userInfo && userInfo.isAdmin && (
+            <button  type="button"  onClick={() => deleteHandler(task)}>
               <FiTrash2 size={20} color="#a8a8b3" />
             </button>
         )}
 
             {/*  Navigate to tasks */}
-             <div style={{display:"flex"}}>
-              <AiOutlineArrowRight size={20} color="#e02041" />  <Link to={"/product/" + product._id} color="#e02041"> Tasks for this project </Link>
-            </div>
+             {/* <div style={{display:"flex"}}>
+              <AiOutlineArrowRight size={20} color="#e02041" />  <Link to={"/product/" + task._id} color="#e02041"> Details for this project </Link>
+            </div> */}
           </li>  
         ))}
       </ul>
     </div>
-    </div>
+     </div>
 }
-
-export default HomeScreen;
+export default TaskScreen;
