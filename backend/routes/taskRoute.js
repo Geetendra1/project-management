@@ -1,7 +1,9 @@
 import express from 'express';
 import Project from '../modals/projectModals'
 import Task from '../modals/taskModal'
+import User from '../modals/userModals'
 import { isAuth, isAdmin } from '../util';
+const sendEmail = require('../email/email.send')
 const cookieParser = require('cookie-parser')
 const router = express.Router();
 
@@ -61,6 +63,15 @@ if(task) {
   task.description =  req.body.description || task.description
   task.worker = req.body.worker || task.worker
   const updatedtask = await task.save();
+  const user = await User.findOne({"name":task.worker})
+
+  if(user) {
+    const msg = {
+      subject: 'Simple msg test',
+      html: `<p> This is for task : ${task.description}  </p>`
+    }
+  const mail = await sendEmail(user.email, msg)
+  }
   if(updatedtask) {
     return res
       .status(200)

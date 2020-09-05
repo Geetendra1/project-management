@@ -132,7 +132,7 @@ router.get('/:id',  async (req,res) => {
   const project = await Project.findOne({_id:req.params.id}).populate('tasks');
   if(project) {
     res.send(project);
-    console.log(project);
+    // console.log(project);
   } else {
         res.status(404).send({ message: 'Product Not Found.' });
   }
