@@ -10,7 +10,8 @@ router.post('/', async (req,res) => {
     const project = await Project.findById(req.body.projectId);
     const task = new Task({
         projectId:req.body.projectId,
-        description:req.body.description
+        description:req.body.description,
+        worker:req.body.worker
     });
     try {
         project.tasks.push(task)
@@ -35,6 +36,12 @@ router.get('/' , async (req,res) => {
   res.send(tasks)
 }) 
 
+// GET BY ID
+router.get('/:id' , async (req,res) => {
+  const task = await Task.findById({_id:req.params.id})
+  res.send(task)
+}) 
+
 // DELETE TASK
 router.delete('/:id', async (req,res) => {
   const deleteTask = await Task.findById({_id:req.params.id});
@@ -49,9 +56,10 @@ router.delete('/:id', async (req,res) => {
 
 // UPDATE TASK
 router.put('/:id', async (req,res) => {
-   const task = await Task.findOne({_id:req.params.id});
+   const task = await Task.findById({_id:req.params.id});
 if(task) {
-  task.description =  req.body.name || task.description
+  task.description =  req.body.description || task.description
+  task.worker = req.body.worker || task.worker
   const updatedtask = await task.save();
   if(updatedtask) {
     return res

@@ -21,7 +21,7 @@ const saveTask = (task) => async (dispatch, getState) => {
       dispatch({ type: TASK_SAVE_SUCCESS, payload: data });
     } else {
       const { data } = await Axios.put(
-        '/api/tasks' + task._id,
+        '/api/tasks/' + task._id,
         task,
         {
           headers: {

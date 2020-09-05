@@ -44,7 +44,7 @@ const saveProduct = (product) => async (dispatch, getState) => {
       dispatch({ type: PRODUCT_SAVE_SUCCESS, payload: data });
     } else {
       const { data } = await Axios.put(
-        '/api/projects' + product._id,
+        '/api/projects/' + product._id,
         product,
         {
           headers: {

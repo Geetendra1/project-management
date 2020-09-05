@@ -1,7 +1,7 @@
 import React,{ useEffect, useHistory, useState} from 'react';
 import { Link } from "react-router-dom";
 import {Modal} from 'react-bootstrap'
-import { FiPower, FiTrash2 } from 'react-icons/fi';
+import { FiPower, FiTrash2 , FiEdit} from 'react-icons/fi';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import {useSelector, useDispatch} from "react-redux";
 import {listProducts,saveProduct,deleteProduct,} from '../actions/productActions' 
@@ -156,6 +156,7 @@ const openModal = (project) => {
             {/*  Navigate to tasks */}
              <div style={{display:"flex"}}>
               <AiOutlineArrowRight size={20} color="#e02041" />  <Link to={"/product/" + product._id} color="#e02041"> Tasks for this project </Link>
+              <FiEdit size={20} color="#a8a8b3"  onClick={() => openModal(product)} />
             </div>
           </li>  
         ))}

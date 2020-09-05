@@ -2,7 +2,7 @@ import React,{useEffect,useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {detailsProduct} from '../actions/productActions'
 import {listUsers} from '../actions/UserActions'
-import { FiPower, FiTrash2 } from 'react-icons/fi';
+import { FiPower, FiTrash2 , FiEdit } from 'react-icons/fi';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { Link } from "react-router-dom";
 import logoImg from '../assets/logo.svg';
@@ -21,6 +21,7 @@ function TaskScreen (props) {
     const [id, setId] = useState('');
     const [projectId, setProjectId] = useState('');
     const [description, setDescription] = useState('');
+    const [worker, setWorker] = useState('');
 
     
     const taskSave = useSelector((state) => state.taskSave);
@@ -50,17 +51,17 @@ function TaskScreen (props) {
       }
     }, [successSave,successDelete])
 
-    function handleLogout() {
-    localStorage.clear();
-    this.props.history.push('/');
-  }
+
 
   const openModal = (task) => {
   setModalVisible(true);
   setProjectId(projectid);
   setId(task._id);
   setDescription(task.description);
+  setWorker(task.worker)
 }
+
+
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -69,6 +70,7 @@ function TaskScreen (props) {
         _id: id,
         projectId,
         description,
+        worker
       })
     );
   };
@@ -110,6 +112,22 @@ function TaskScreen (props) {
                   onChange={(e) => setDescription(e.target.value)}
                 ></textarea>
               </li>
+
+              <li>
+                <label htmlFor="description">Worker</label>
+                   <select
+                          name="worker"
+                          id="worker"
+                          value={worker}
+                          onChange={(e) => setWorker(e.target.value)}
+                        >
+                          {users.map(user => (
+                            <option >{user.name}</option>
+                          ))}
+                        </select>
+              </li>
+
+
               <li>
                 <button type="submit" className="button primary">
                   {id ? 'Update' : 'Create'}
@@ -137,22 +155,21 @@ function TaskScreen (props) {
         {project.tasks.map(task => (
           <li key={task._id} >
 
-            <strong>NAME:</strong>
-            <p>{task.name}</p>
+            <strong>WORKER:</strong>
+            <p>{task.worker}</p>
 
             <strong>DESCRIPTION:</strong>
             <p>{task.description}</p>
 
         { userInfo && userInfo.isAdmin && (
-            <button  type="button"  onClick={() => deleteHandler(task)}>
-              <FiTrash2 size={20} color="#a8a8b3" />
-            </button>
+            <div style={{ display:"flex",justifyContent:"space-around"}}>
+              <FiTrash2 size={20} color="#a8a8b3" onClick={() => deleteHandler(task)} />
+            
+              <FiEdit size={20} color="#a8a8b3"  onClick={() => openModal(task)} />
+
+            </div>
         )}
 
-            {/*  Navigate to tasks */}
-             {/* <div style={{display:"flex"}}>
-              <AiOutlineArrowRight size={20} color="#e02041" />  <Link to={"/product/" + task._id} color="#e02041"> Tasks for this project </Link>
-            </div> */}
           </li>  
         ))}
       </ul>
