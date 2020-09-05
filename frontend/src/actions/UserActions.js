@@ -13,7 +13,7 @@ const listUsers = () => async (dispatch) => {
     try {
         dispatch({type: USERS_LIST_REQUEST});
         const { data } = await axios.get("/api/users");
-        console.log("users", data);
+        
         dispatch({type: USERS_LIST_SUCCESS, payload: data})
     } catch(error) {
          dispatch({type: USERS_LIST_FAIL, payload: error.message})

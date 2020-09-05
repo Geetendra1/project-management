@@ -14,7 +14,7 @@ function TaskScreen (props) {
     const {project,loading,error} = productDetails;
     const userList = useSelector(state => state.userList)
     const {users} = userList
-    console.log(users);
+    // console.log(users);
     const projectid = props.match.params.id
     
     const [modalVisible ,setModalVisible] = useState(false);
