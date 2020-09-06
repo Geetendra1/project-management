@@ -59,18 +59,29 @@ router.delete('/:id', async (req,res) => {
 // UPDATE TASK
 router.put('/:id', async (req,res) => {
    const task = await Task.findById({_id:req.params.id});
+    const userInfo = JSON.parse(req.cookies['userInfo'])
+    const currentuser = userInfo
 if(task) {
   task.description =  req.body.description || task.description
   task.worker = req.body.worker || task.worker
   const updatedtask = await task.save();
-  const user = await User.findOne({"name":task.worker})
+  const worker = await User.findOne({"name":task.worker})
 
-  if(user) {
+  if(currentuser.isAdmin) {
     const msg = {
       subject: 'Simple msg test',
-      html: `<p> This is for task : ${task.description}  </p>`
+      html: `<p> New task has been assignemd to you by ${currentuser.name} This is for task : ${task.description}  </p>`
     }
-  const mail = await sendEmail(user.email, msg)
+  const mail = await sendEmail(worker.email, msg)
+  }
+
+  if(!currentuser.isAdmin) {
+    const adminEmail = 'sengargeetendra123@gmail.com'
+    const msg = {
+      subject: 'Updation Email ',
+      html: `<p> New updation has been done by ${currentuser.name} This is for task : ${task.description}  </p>`
+    }
+  const mail = await sendEmail(adminEmail, msg)
   }
   if(updatedtask) {
     return res
@@ -79,7 +90,6 @@ if(task) {
   }
 }
   return res.status(500).send({ message: ' Error in Updating Project.' });
-
 })
 
 

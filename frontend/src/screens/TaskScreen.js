@@ -162,11 +162,9 @@ function TaskScreen (props) {
         { userInfo && userInfo.isAdmin && (
             <div style={{ display:"flex",justifyContent:"space-around"}}>
               <FiTrash2 size={20} color="#a8a8b3" onClick={() => deleteHandler(task)} />
-            
-              <FiEdit size={20} color="#a8a8b3"  onClick={() => openModal(task)} />
-
             </div>
         )}
+              <FiEdit size={20} color="#a8a8b3"  onClick={() => openModal(task)} />
 
           </li>  
         ))}
