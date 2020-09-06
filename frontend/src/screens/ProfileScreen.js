@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { logout, update } from '../actions/UserActions';
-import { listMyOrders } from '../actions/orderActions';
+import { listMyTasks } from '../actions/TaskActions';
 import { useDispatch, useSelector } from 'react-redux';
 
 function ProfileScreen(props) {
@@ -23,8 +23,8 @@ function ProfileScreen(props) {
   const userUpdate = useSelector(state => state.userUpdate);
   const { loading, success, error } = userUpdate;
  
-  const myOrderList = useSelector(state => state.myOrderList);
-  const { loading: loadingOrders, orders, error: errorOrders } = myOrderList;
+  const myTaskList = useSelector(state => state.myTaskList);
+  const { loading: loadingTasks, tasks, error: errorTasks } = myTaskList;
   useEffect(() => {
     if (userInfo) {
       console.log(userInfo.name)
@@ -32,7 +32,7 @@ function ProfileScreen(props) {
       setName(userInfo.name);
       setPassword(userInfo.password);
     }
-    dispatch(listMyOrders());
+    dispatch(listMyTasks());
     return () => {
 
     };
@@ -66,11 +66,6 @@ function ProfileScreen(props) {
               <input value={email} type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)}>
               </input>
             </li>
-            <li>
-              <label htmlFor="password">Password</label>
-              <input value={password} type="password" id="password" name="password" onChange={(e) => setPassword(e.target.value)}>
-              </input>
-            </li>
 
             <li>
               <button type="submit" className="button primary">Update</button>
@@ -85,26 +80,26 @@ function ProfileScreen(props) {
     </div>
     <div className="profile-orders content-margined">
       {
-        loadingOrders ? <div>Loading...</div> :
-          errorOrders ? <div>{errorOrders} </div> :
+        loadingTasks ? <div>Loading...</div> :
+          errorTasks ? <div>{errorTasks} </div> :
             <table className="table">
               <thead>
                 <tr>
                   <th>ID</th>
                   <th>DATE</th>
-                  <th>TOTAL</th>
-                  <th>PAID</th>
+                  <th>DESCRIPTION</th>
+                  <th>STATUS</th>
                   <th>ACTIONS</th>
                 </tr>
               </thead>
               <tbody>
-                {orders.map(order => <tr key={order._id}>
-                  <td>{order._id}</td>
-                  <td>{order.createdAt}</td>
-                  <td>{order.totalPrice}</td>
-                  <td>{order.isPaid}</td>
+                {tasks.map(task => <tr key={task._id}>
+                  <td>{task._id}</td>
+                  <td>{task.createdAt}</td>
+                  <td>{task.description}</td>
+                  <td>{task.status}</td>
                   <td>
-                    <Link to={"/order/" + order._id}>DETAILS</Link>
+                    <Link to={"/task/" + task._id}>DETAILS</Link>
                   </td>
                 </tr>)}
               </tbody>

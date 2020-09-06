@@ -13,7 +13,11 @@ router.post('/', async (req,res) => {
     const task = new Task({
         projectId:req.body.projectId,
         description:req.body.description,
-        worker:req.body.worker
+        worker:req.body.worker,
+        status:req.body.status ,
+        started:req.body.started,
+        end:req.body.end
+
     });
     try {
         project.tasks.push(task)
@@ -32,6 +36,14 @@ router.post('/', async (req,res) => {
 
 })
 
+// GET MINE TASKS 
+router.get("/mine", isAuth, async (req, res) => {
+  const userInfo = JSON.parse(req.cookies['userInfo'])
+  const userName = userInfo.name
+  const tasks = await Task.find({"worker" : userName}).populate('user');
+  res.send(tasks);
+});
+
 // GET ALL TASK
 router.get('/' , async (req,res) => {
   const tasks = await Task.find()
@@ -43,6 +55,8 @@ router.get('/:id' , async (req,res) => {
   const task = await Task.findById({_id:req.params.id})
   res.send(task)
 }) 
+
+
 
 // DELETE TASK
 router.delete('/:id', async (req,res) => {
@@ -64,6 +78,9 @@ router.put('/:id', async (req,res) => {
 if(task) {
   task.description =  req.body.description || task.description
   task.worker = req.body.worker || task.worker
+  task.status = req.body.status || task.status
+  task.started = req.body.started || task.started
+  task.end = req.body.end || task.end
   const updatedtask = await task.save();
   const worker = await User.findOne({"name":task.worker})
 

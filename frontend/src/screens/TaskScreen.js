@@ -7,6 +7,8 @@ import { AiOutlineArrowRight } from 'react-icons/ai';
 import { Link } from "react-router-dom";
 import logoImg from '../assets/logo.svg';
 import {saveTask,deleteTask} from '../actions/TaskActions'
+import Moment from 'react-moment';
+
 function TaskScreen (props) {
     const userSignin = useSelector(state=> state.userSignin);
     const productDetails = useSelector(state => state.productDetails)
@@ -21,7 +23,9 @@ function TaskScreen (props) {
     const [projectId, setProjectId] = useState('');
     const [description, setDescription] = useState('');
     const [worker, setWorker] = useState('');
-
+    const [status, setStatus] = useState('');
+    const [started, setStarted] = useState('');
+    const [end, setEnd] = useState('');
     const taskSave = useSelector((state) => state.taskSave);
     const {
     loading: loadingSave,
@@ -57,6 +61,9 @@ function TaskScreen (props) {
   setId(task._id);
   setDescription(task.description);
   setWorker(task.worker)
+  setStatus(task.status)
+  setStarted(task.started)
+  setEnd(task.end)
 }
 
 
@@ -68,7 +75,10 @@ function TaskScreen (props) {
         _id: id,
         projectId,
         description,
-        worker
+        worker,
+        status,
+        started,
+        end
       })
     );
   };
@@ -111,6 +121,28 @@ function TaskScreen (props) {
                 ></textarea>
               </li>
 
+                <li>
+                <label htmlFor="description">Start At</label>
+                <input
+                  name="started"
+                  value={started}
+                  id="started"
+                  type="date"
+                  onChange={(e) => setStarted(e.target.value)}
+                ></input>
+              </li>
+
+              <li>
+                <label htmlFor="description">End At</label>
+                <input
+                  name="end"
+                  value={end}
+                  id="end"
+                  type="date"
+                  onChange={(e) => setEnd(e.target.value)}
+                ></input>
+              </li>
+
               <li>
                 <label htmlFor="description">Worker</label>
                    <select
@@ -125,6 +157,21 @@ function TaskScreen (props) {
                         </select>
               </li>
 
+                <li>
+                <label htmlFor="status">Status</label>
+                   <select
+                          name="status"
+                          id="status"
+                          value={status}
+                          onChange={(e) => setStatus(e.target.value)}
+                        >
+                         <option >Not-assigned</option>
+                          <option >Started</option>
+                          <option >InProgress</option>
+                          <option >Delayed</option>
+                          <option >Completed</option>
+                        </select>
+              </li>
 
               <li>
                 <button type="submit" className="button primary">
@@ -158,6 +205,12 @@ function TaskScreen (props) {
 
             <strong>DESCRIPTION:</strong>
             <p>{task.description}</p>
+
+              <strong>STATUS:</strong>
+            <p>{task.status}</p>
+
+              <strong>STARTED AT:</strong>
+            <p> <Moment format="YYYY/MM/DD">{task.started}</Moment></p>
 
         { userInfo && userInfo.isAdmin && (
             <div style={{ display:"flex",justifyContent:"space-around"}}>

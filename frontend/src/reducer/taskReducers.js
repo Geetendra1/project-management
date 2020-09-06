@@ -1,5 +1,6 @@
 import {TASK_SAVE_REQUEST,TASK_SAVE_SUCCESS,TASK_SAVE_FAIL,
-TASK_DELETE_REQUEST,TASK_DELETE_SUCCESS,TASK_DELETE_FAIL
+TASK_DELETE_REQUEST,TASK_DELETE_SUCCESS,TASK_DELETE_FAIL,
+MY_TASK_LIST_REQUEST,MY_TASK_LIST_SUCCESS,MY_TASK_LIST_FAIL
 
 } from '../constants/taskConstants'
 
@@ -29,4 +30,18 @@ function taskDeleteReducer(state = { task: {} }, action) {
   }
 }
 
-export {taskSaveReducer , taskDeleteReducer}
+function myTaskListReducer(state = {
+  tasks: []
+}, action) {
+  switch (action.type) {
+    case MY_TASK_LIST_REQUEST:
+      return { loading: true };
+    case MY_TASK_LIST_SUCCESS:
+      return { loading: false, tasks: action.payload };
+    case MY_TASK_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default: return state;
+  }
+}
+
+export {taskSaveReducer , taskDeleteReducer, myTaskListReducer}

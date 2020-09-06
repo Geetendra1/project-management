@@ -75,7 +75,7 @@ const  closeMenu = () =>  {
     <main className="main">
       <div className="content">
       <Route path="/" exact={true} component={HomeScreen} />
-      <Route path="/products" component={ProductsScreen} />
+     
       <Route path="/order/:id" component={OrderScreen} />
       <Route path="/placeorder" component={PlaceOrderScreen} />
       <Route path="/payment" component={PaymentScreen} />
