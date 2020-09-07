@@ -1,6 +1,7 @@
 import {TASK_SAVE_REQUEST,TASK_SAVE_SUCCESS,TASK_SAVE_FAIL,
 TASK_DELETE_REQUEST,TASK_DELETE_SUCCESS,TASK_DELETE_FAIL,
-MY_TASK_LIST_REQUEST,MY_TASK_LIST_SUCCESS,MY_TASK_LIST_FAIL
+MY_TASK_LIST_REQUEST,MY_TASK_LIST_SUCCESS,MY_TASK_LIST_FAIL,
+TASK_DETAILS_REQUEST,TASK_DETAILS_SUCCESS,TASK_DETAILS_FAIL
 
 } from '../constants/taskConstants'
 import  axios  from "axios";
@@ -70,4 +71,15 @@ const listMyTasks = () => async (dispatch, getState) => {
   }
 }
 
-export {saveTask, deleteTask,listMyTasks}
+const detailsTask = (taskId) => async (dispatch) => {
+  try {
+    dispatch({ type: TASK_DETAILS_REQUEST, payload: taskId });
+    const { data } = await axios.get('/api/tasks/' + taskId);
+    console.log(data);
+    dispatch({ type: TASK_DETAILS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: TASK_DETAILS_FAIL, payload: error.message });
+  }
+};
+
+export {saveTask, deleteTask,listMyTasks,detailsTask}

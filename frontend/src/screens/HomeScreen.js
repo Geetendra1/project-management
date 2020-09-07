@@ -6,7 +6,7 @@ import { AiOutlineArrowRight } from 'react-icons/ai';
 import {useSelector, useDispatch} from "react-redux";
 import {listProducts,saveProduct,deleteProduct,} from '../actions/productActions' 
 import logoImg from '../assets/logo.svg';
-
+import { BiTask } from 'react-icons/bi';
 
 function HomeScreen(props) {
 const productList = useSelector(state => state.productList)
@@ -147,16 +147,17 @@ const openModal = (project) => {
             <strong>DESCRIPTION:</strong>
             <p>{product.description}</p>
 
-        { userInfo && userInfo.isAdmin && (
+        {/* { userInfo && userInfo.isAdmin && (
             <button  type="button"  onClick={() => deleteHandler(product)}>
               <FiTrash2 size={20} color="#a8a8b3" />
             </button>
-        )}
+        )} */}
 
             {/*  Navigate to tasks */}
              <div style={{display:"flex"}}>
-              <AiOutlineArrowRight size={20} color="#e02041" />  <Link to={"/product/" + product._id} color="#e02041"> Tasks for this project </Link>
-              <FiEdit size={20} color="#a8a8b3"  onClick={() => openModal(product)} />
+             <Link to={"/product/" + product._id} color="#e02041"> <BiTask size={30}  />  </Link>
+              <FiEdit style={{marginLeft:"20px"}} size={30} color="#a8a8b3"  onClick={() => openModal(product)} />
+              <FiTrash2 style={{marginLeft:"20px"}} size={30} color="#a8a8b3" onClick={() => deleteHandler(product)} />
             </div>
           </li>  
         ))}

@@ -139,7 +139,6 @@ router.get('/:id',  async (req,res) => {
 })
 
 
-
 // DELETE PROJECT
 router.delete('/:id', isAuth , isAdmin, async (req,res) => {
   const deleteProject = await Project.findById({_id:req.params.id});

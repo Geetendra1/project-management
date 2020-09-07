@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { logout, update } from '../actions/UserActions';
 import { listMyTasks } from '../actions/TaskActions';
 import { useDispatch, useSelector } from 'react-redux';
+import Moment from 'react-moment';
 
 function ProfileScreen(props) {
   const [name, setName] = useState('');
@@ -95,7 +96,7 @@ function ProfileScreen(props) {
               <tbody>
                 {tasks.map(task => <tr key={task._id}>
                   <td>{task._id}</td>
-                  <td>{task.createdAt}</td>
+                  <td><Moment format="YYYY/MM/DD">{task.started}</Moment> - to - <Moment format="YYYY/MM/DD">{task.end}</Moment></td>
                   <td>{task.description}</td>
                   <td>{task.status}</td>
                   <td>

@@ -11,6 +11,7 @@ const router = express.Router();
 router.post('/', async (req,res) => {
     const project = await Project.findById(req.body.projectId);
     const task = new Task({
+        name:req.body.name,
         projectId:req.body.projectId,
         description:req.body.description,
         worker:req.body.worker,
@@ -51,16 +52,22 @@ router.get('/' , async (req,res) => {
 }) 
 
 // GET BY ID
-router.get('/:id' , async (req,res) => {
-  const task = await Task.findById({_id:req.params.id})
-  res.send(task)
-}) 
+// GET PROJECT BY TASK ID
+router.get('/:id',  async (req,res) => {
+  const project = await Project.findOne({tasks:req.params.id},{_id:0, "tasks.$" : 1 , name: 1, description:1}).populate('tasks');
+  if(project) {
+    res.send(project);
+  } else {
+        res.status(404).send({ message: 'Product Not Found.' });
+  }
+})
 
 
 
 // DELETE TASK
 router.delete('/:id', async (req,res) => {
   const deleteTask = await Task.findById({_id:req.params.id});
+  // const deleteTaskfromTask = await Task.findById({_id:req.params.id});
   if(deleteTask) {
     await deleteTask.remove()
     res.send({message:"Task Deleted"})
@@ -76,6 +83,7 @@ router.put('/:id', async (req,res) => {
     const userInfo = JSON.parse(req.cookies['userInfo'])
     const currentuser = userInfo
 if(task) {
+  task.name =  req.body.name || task.name
   task.description =  req.body.description || task.description
   task.worker = req.body.worker || task.worker
   task.status = req.body.status || task.status

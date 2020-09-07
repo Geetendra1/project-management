@@ -21,6 +21,7 @@ function TaskScreen (props) {
     const [modalVisible ,setModalVisible] = useState(false);
     const [id, setId] = useState('');
     const [projectId, setProjectId] = useState('');
+    const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [worker, setWorker] = useState('');
     const [status, setStatus] = useState('');
@@ -58,6 +59,7 @@ function TaskScreen (props) {
   const openModal = (task) => {
   setModalVisible(true);
   setProjectId(projectid);
+  setName(task.name)
   setId(task._id);
   setDescription(task.description);
   setWorker(task.worker)
@@ -73,6 +75,7 @@ function TaskScreen (props) {
     dispatch(
       saveTask({
         _id: id,
+        name,
         projectId,
         description,
         worker,
@@ -111,6 +114,16 @@ function TaskScreen (props) {
                 {errorSave && <div>{errorSave}</div>}
               </li>
               
+               <li>
+                <label htmlFor="name">Name</label>
+                <textarea
+                  name="name"
+                  value={name}
+                  id="name"
+                  onChange={(e) => setName(e.target.value)}
+                ></textarea>
+              </li>
+
               <li>
                 <label htmlFor="description">Description</label>
                 <textarea
@@ -199,6 +212,10 @@ function TaskScreen (props) {
       <ul>
         {project.tasks.map(task => (
           <li key={task._id} >
+
+            <strong>NAME:</strong>
+            <p>{task.name}</p>
+
 
             <strong>WORKER:</strong>
             <p>{task.worker}</p>
