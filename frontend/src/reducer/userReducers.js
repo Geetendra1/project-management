@@ -2,7 +2,8 @@ import {USER_SIGNIN_REQUEST,USER_SIGNIN_SUCCESS,USER_SIGNIN_FAIL,
 USER_LOGOUT,USER_REGISTER_REQUEST,USER_REGISTER_SUCCESS,USER_REGISTER_FAIL,
 USER_UPDATE_REQUEST,USER_UPDATE_SUCCESS,USER_UPDATE_FAIL,
   USERS_LIST_REQUEST,USERS_LIST_SUCCESS,USERS_LIST_FAIL,
-  USER_FORGOT_REQUEST,USER_FORGOT_SUCCESS,USER_FORGOT_FAIL
+  USER_FORGOT_REQUEST,USER_FORGOT_SUCCESS,USER_FORGOT_FAIL,
+  USER_RESET_REQUEST,USER_RESET_SUCCESS,USER_RESET_FAIL,
 
 } from '../constants/userConstants'
 
@@ -18,8 +19,6 @@ function userListReducer(state = { users: [] }, action) {
       return state;
   }
 }
-
-
 
 function userSigninReducer(state = {}, action) {
   switch (action.type) {
@@ -47,18 +46,6 @@ function userRegisterReducer(state = {}, action) {
   }
 }
 
-function userForgotReducer(state = {}, action) {
-  switch (action.type) {
-    case USER_FORGOT_REQUEST:
-      return { loading: true };
-    case USER_FORGOT_SUCCESS:
-      return { loading: false, userEmail: action.payload };
-    case USER_FORGOT_FAIL:
-      return { loading: false, error: action.payload };
-    default: return state;
-  }
-}
-
 function userUpdateReducer(state = {}, action) {
   switch (action.type) {
     case USER_UPDATE_REQUEST:
@@ -71,5 +58,32 @@ function userUpdateReducer(state = {}, action) {
   }
 }
 
+function userResetReducer(state = {}, action) {
+  switch (action.type) {
+    case USER_RESET_REQUEST:
+      return { loading: true };
+    case USER_RESET_SUCCESS:
+      return { loading: false, userPassword: action.payload };
+    case USER_RESET_FAIL:
+      return { loading: false, error: action.payload };
+    default: return state;
+  }
+}
 
-export {userSigninReducer,userRegisterReducer,userUpdateReducer,userListReducer,userForgotReducer}
+
+function userForgotReducer(state = {}, action) {
+  switch (action.type) {
+    case USER_FORGOT_REQUEST:
+      return { loading: true };
+    case USER_FORGOT_SUCCESS:
+      return { loading: false, userEmail: action.payload };
+    case USER_FORGOT_FAIL:
+      return { loading: false, error: action.payload };
+    default: return state;
+  }
+}
+
+
+
+
+export {userSigninReducer,userRegisterReducer,userUpdateReducer,userListReducer,userForgotReducer,userResetReducer}

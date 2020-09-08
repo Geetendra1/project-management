@@ -9,7 +9,9 @@ const router = express.Router();
 
 // CREATE TASK
 router.post('/', async (req,res) => {
-    const project = await Project.findById(req.body.projectId);
+  const project = await Project.findById(req.body.projectId);
+  const userInfo = JSON.parse(req.cookies['userInfo'])
+  const currentuser = userInfo
     const task = new Task({
         name:req.body.name,
         projectId:req.body.projectId,
@@ -24,12 +26,30 @@ router.post('/', async (req,res) => {
         project.tasks.push(task)
         const updatedProject = await project.save()
         const newTask = await task.save()
+        const worker = await User.findOne({"name":task.worker})
+        console.log(worker);
+        if(currentuser.isAdmin) {
+              const msg = {
+                subject: 'Simple msg test',
+                html: `<p> New task has been assignemd to you by ${currentuser.name} This is for task : ${task.name}  </p>`
+              }
+            const mail = await sendEmail(worker.email, msg)
+            }
 
+         if(!currentuser.isAdmin) {
+              const adminEmail = 'sengargeetendra123@gmail.com'
+              const msg = {
+                subject: 'Updation Email ',
+                html: `<p> New updation has been done by ${currentuser.name} This is for task : ${task.name}  </p>`
+              }
+            const mail = await sendEmail(adminEmail, msg)
+            }
         if(newTask) {
             return res 
             .status(201)
             .send({message : 'new task is created' , data: newTask})
         }
+        
         return res.status(500).send({message:'error in creatin task'})
     } catch (error) {
         console.log({message:"error"});
@@ -78,9 +98,9 @@ router.delete('/:id', async (req,res) => {
 
 // UPDATE TASK
 router.put('/:id', async (req,res) => {
-   const task = await Task.findById({_id:req.params.id});
-    const userInfo = JSON.parse(req.cookies['userInfo'])
-    const currentuser = userInfo
+  const task = await Task.findById({_id:req.params.id});
+  const userInfo = JSON.parse(req.cookies['userInfo'])
+  const currentuser = userInfo
 if(task) {
   task.name =  req.body.name || task.name
   task.description =  req.body.description || task.description

@@ -57,7 +57,7 @@ router.post('/signin/forgot' , async (req,res) => {
 
 router.post('/signin/reset/:id' , async (req,res) => {
   const user = await User.findOne({ _id: req.params.id });
-   
+   console.log("from route / user" , user);
   if(!user) {
     res.json({msg:'user does not exists'})
     res.json({ msg: msgs.couldNotFind })
@@ -68,11 +68,15 @@ router.post('/signin/reset/:id' , async (req,res) => {
           message: "Token has expired."
         });
       }
- 
-  user.password = req.body.password;
+ if(user) {
+  user.password = req.body.password || user.password;
+  console.log("from route" ,  req.body.password);
   user.passwordResetExpires = moment().utcOffset(0);
   user.save()
   res.status(200).send({message:"new password has been set , Please login"})
+ } else {
+   res.status(404).send({ message: 'Something happend' });
+ }
 
 })
 

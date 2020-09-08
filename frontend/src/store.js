@@ -1,6 +1,6 @@
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import { productListReducer,productDetailsReducer, productSaveReducer,productDeleteReducer,productAdminListReducer} from "./reducer/productReducers";
-import {userSigninReducer, userRegisterReducer,userUpdateReducer,userListReducer,userForgotReducer} from './reducer/userReducers'
+import {userSigninReducer, userRegisterReducer,userUpdateReducer,userListReducer,userForgotReducer,userResetReducer} from './reducer/userReducers'
 import {taskSaveReducer, taskDeleteReducer, myTaskListReducer,taskDetailsReducer} from './reducer/taskReducers'
 import Cookie from "js-cookie"
 import {cartReducer} from './reducer/cartReducers';
@@ -22,20 +22,25 @@ const reducer = combineReducers({
     productList : productListReducer,
     productAdminList:productAdminListReducer,
     productDetails: productDetailsReducer,
+    productSave:productSaveReducer,
+    productDelete:productDeleteReducer,
+
     cart:cartReducer,
+
     userSignin:userSigninReducer,
     userRegister:userRegisterReducer,
     userList:userListReducer,
     userForgot:userForgotReducer,
-    productSave:productSaveReducer,
-    productDelete:productDeleteReducer,
+    userUpdate: userUpdateReducer,
+    userReset:userResetReducer,
+    
     orderCreate:orderCreateReducer,
     orderDetails:orderDetailsReducer,
     orderPay: orderPayReducer,
-    userUpdate: userUpdateReducer,
     myOrderList: myOrderListReducer,
     orderList: orderListReducer,
     orderDelete: orderDeleteReducer,
+
     taskSave:taskSaveReducer,
     taskDelete:taskDeleteReducer,
     myTaskList:myTaskListReducer,

@@ -28,6 +28,7 @@ if (userEmail) {
         <li>
           <h2>Forgot Password ?</h2>
           <p>Please type the your email !  </p>
+          
         </li>
         <li>
           {loading && <div>Loading...</div>}
@@ -44,7 +45,7 @@ if (userEmail) {
           <button type="submit" className="button primary">Send Email</button>
         </li>
         <li>
-          You remember you email ?
+          You remember you password ?
           <Link to="/signin">Go to login page </Link>
         </li>
 

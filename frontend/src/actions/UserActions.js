@@ -6,7 +6,8 @@ import {
   USER_SIGNIN_FAIL, USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_LOGOUT, USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL,
   USERS_LIST_REQUEST,USERS_LIST_SUCCESS,USERS_LIST_FAIL,
-  USER_FORGOT_REQUEST,USER_FORGOT_SUCCESS,USER_FORGOT_FAIL
+  USER_FORGOT_REQUEST,USER_FORGOT_SUCCESS,USER_FORGOT_FAIL,
+  USER_RESET_REQUEST,USER_RESET_SUCCESS,USER_RESET_FAIL,
 } from "../constants/userConstants";
 
 
@@ -54,6 +55,7 @@ const forgot = (email) => async (dispatch) => {
   }
 }
 
+
 const logout = () => (dispatch) => {
   Cookie.remove("userInfo");
   dispatch({ type: USER_LOGOUT })
@@ -76,4 +78,15 @@ const update = ({ userId, name, email, password }) => async (dispatch, getState)
   }
 }
 
-export {signin, register,forgot,update,logout,listUsers} ; 
+const reset = ({userId,password}) => async (dispatch) => {
+    dispatch({ type: USER_RESET_REQUEST, payload: { userId , password } });
+  try {
+    const { data } = await axios.post('/api/users/signin/reset/' + userId, { password } );
+    console.log("from action",data);
+    dispatch({ type: USER_RESET_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: USER_RESET_FAIL, payload: error.message });
+  }
+};
+
+export {signin, register,forgot,update,logout,listUsers,reset} ; 
