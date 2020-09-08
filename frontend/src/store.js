@@ -1,6 +1,6 @@
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import { productListReducer,productDetailsReducer, productSaveReducer,productDeleteReducer,productAdminListReducer} from "./reducer/productReducers";
-import {userSigninReducer, userRegisterReducer,userUpdateReducer,userListReducer} from './reducer/userReducers'
+import {userSigninReducer, userRegisterReducer,userUpdateReducer,userListReducer,userForgotReducer} from './reducer/userReducers'
 import {taskSaveReducer, taskDeleteReducer, myTaskListReducer,taskDetailsReducer} from './reducer/taskReducers'
 import Cookie from "js-cookie"
 import {cartReducer} from './reducer/cartReducers';
@@ -26,6 +26,7 @@ const reducer = combineReducers({
     userSignin:userSigninReducer,
     userRegister:userRegisterReducer,
     userList:userListReducer,
+    userForgot:userForgotReducer,
     productSave:productSaveReducer,
     productDelete:productDeleteReducer,
     orderCreate:orderCreateReducer,

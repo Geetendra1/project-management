@@ -5,7 +5,8 @@ import {
   USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS,
   USER_SIGNIN_FAIL, USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_LOGOUT, USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL,
-  USERS_LIST_REQUEST,USERS_LIST_SUCCESS,USERS_LIST_FAIL
+  USERS_LIST_REQUEST,USERS_LIST_SUCCESS,USERS_LIST_FAIL,
+  USER_FORGOT_REQUEST,USER_FORGOT_SUCCESS,USER_FORGOT_FAIL
 } from "../constants/userConstants";
 
 
@@ -42,6 +43,17 @@ const register = (name, email, password) => async (dispatch) => {
   }
 }
 
+const forgot = (email) => async (dispatch) => {
+  dispatch({ type: USER_FORGOT_REQUEST, payload: { email} });
+  try {
+    const { data } = await Axios.post("/api/users/signin/forgot", {email});
+    console.log(data);
+    dispatch({ type: USER_FORGOT_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: USER_FORGOT_FAIL, payload: error.message });
+  }
+}
+
 const logout = () => (dispatch) => {
   Cookie.remove("userInfo");
   dispatch({ type: USER_LOGOUT })
@@ -64,4 +76,4 @@ const update = ({ userId, name, email, password }) => async (dispatch, getState)
   }
 }
 
-export {signin, register,update,logout,listUsers} ; 
+export {signin, register,forgot,update,logout,listUsers} ; 

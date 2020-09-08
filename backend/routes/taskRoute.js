@@ -51,7 +51,6 @@ router.get('/' , async (req,res) => {
   res.send(tasks)
 }) 
 
-// GET BY ID
 // GET PROJECT BY TASK ID
 router.get('/:id',  async (req,res) => {
   const project = await Project.findOne({tasks:req.params.id},{_id:0, "tasks.$" : 1 , name: 1, description:1}).populate('tasks');
@@ -95,7 +94,7 @@ if(task) {
   if(currentuser.isAdmin) {
     const msg = {
       subject: 'Simple msg test',
-      html: `<p> New task has been assignemd to you by ${currentuser.name} This is for task : ${task.description}  </p>`
+      html: `<p> New task has been assignemd to you by ${currentuser.name} This is for task : ${task.name}  </p>`
     }
   const mail = await sendEmail(worker.email, msg)
   }
@@ -104,7 +103,7 @@ if(task) {
     const adminEmail = 'sengargeetendra123@gmail.com'
     const msg = {
       subject: 'Updation Email ',
-      html: `<p> New updation has been done by ${currentuser.name} This is for task : ${task.description}  </p>`
+      html: `<p> New updation has been done by ${currentuser.name} This is for task : ${task.name}  </p>`
     }
   const mail = await sendEmail(adminEmail, msg)
   }

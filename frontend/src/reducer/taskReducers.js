@@ -51,7 +51,7 @@ function taskDetailsReducer(state = { project : { tasks: [] } }, action) {
       
     case TASK_DETAILS_SUCCESS:
       return { loading: false, project: action.payload };
-      console.log( "task",action.payload );
+      // console.log( "task",action.payload );
     case TASK_DETAILS_FAIL:
       return { loading: false, error: action.payload };
     default:

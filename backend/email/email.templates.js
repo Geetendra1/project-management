@@ -9,20 +9,20 @@ module.exports = {
   registerConfirm: id => ({
     subject: 'Email Verification',
     html: `<p>Please verify your account by clicking the link:
-      <a href='${CLIENT_ORIGIN}/register/confirm/${id}'>
+      <a href='http://localhost:3000/register/confirm/${id}'>
         click to confirm email
       </a>
     `,      
-    text: `Copy and paste this link: ${CLIENT_ORIGIN}/confirm/${id}`
+    text: `Copy and paste this link: http://localhost:3000/confirm/${id}`
   }),
 
     forgotConfirm: id => ({
     subject: 'Reset Password Link',
     html: `
-      <a href='${CLIENT_ORIGIN}/signin/reset/${id}'>
+      <a href='http://localhost:3000/reset/password/${id}'>
         click to confirm email
       </a>\n\n If you did not request this, please ignore this email and your password will remain unchanged.\n </p>
     `,      
-    text: `Copy and paste this link: ${CLIENT_ORIGIN}/signin/reset/${id}`
+    text: `Copy and paste this link: http://localhost:3000/signin/reset/${id}`
   })
 }

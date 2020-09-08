@@ -75,7 +75,7 @@ const detailsTask = (taskId) => async (dispatch) => {
   try {
     dispatch({ type: TASK_DETAILS_REQUEST, payload: taskId });
     const { data } = await axios.get('/api/tasks/' + taskId);
-    console.log(data);
+    // console.log(data);
     dispatch({ type: TASK_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: TASK_DETAILS_FAIL, payload: error.message });

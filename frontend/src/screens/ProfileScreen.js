@@ -87,7 +87,8 @@ function ProfileScreen(props) {
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>DATE</th>
+                  <th>NAME</th>
+                  <th>DURATION</th>
                   <th>DESCRIPTION</th>
                   <th>STATUS</th>
                   <th>ACTIONS</th>
@@ -96,6 +97,7 @@ function ProfileScreen(props) {
               <tbody>
                 {tasks.map(task => <tr key={task._id}>
                   <td>{task._id}</td>
+                  <td>{task.name}</td>
                   <td><Moment format="YYYY/MM/DD">{task.started}</Moment> - to - <Moment format="YYYY/MM/DD">{task.end}</Moment></td>
                   <td>{task.description}</td>
                   <td>{task.status}</td>

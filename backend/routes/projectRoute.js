@@ -102,10 +102,18 @@ const router = express.Router();
 
 // POST NEW PROJECTS
 router.post('/', isAuth, isAdmin,  async (req,res) => {
+    const userInfo = JSON.parse(req.cookies['userInfo'])
+    const userName = userInfo.name
+    console.log("name", userName);
   const project = new Project({
     name: req.body.name,
-    description:req.body.description
+    description:req.body.description,
+    onwer:userName,
+    started:req.body.started,
+    end:req.body.end
   });
+
+  console.log("owner",project.owner);
   try {
     const newProject = await project.save()
     if(newProject) {
@@ -155,7 +163,9 @@ router.put('/:id', isAuth ,isAdmin, async (req,res) => {
    const project = await Project.findOne({_id:req.params.id});
 if(project) {
   project.name = req.body.name || project.name,
-  project.description =  req.body.name || project.description
+  project.description =  req.body.description || project.description
+  project.started =  req.body.started || project.started
+  project.end =  req.body.end || project.end
   const updatedProject = await project.save();
   if(updatedProject) {
     return res

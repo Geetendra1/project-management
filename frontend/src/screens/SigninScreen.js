@@ -50,6 +50,9 @@ function SigninScreen (props) {
         <li>
           <button type="submit" className="button primary">Signin</button>
         </li>
+        <Link to="/forgot/password">
+          forgot password ?
+        </Link>
         <li>
           New to amazona?
         </li>
