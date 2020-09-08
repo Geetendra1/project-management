@@ -95,7 +95,7 @@ function TasksScreen (props) {
     error ? <div>{error}</div> :
     <div >
       <header className="project-header">
-
+ <h2>Poject :  {project.name}</h2>
                 <Link className="profile-button" onClick={() => openModal({})}>
                   Create Tasks
                 </Link>
@@ -206,46 +206,43 @@ function TasksScreen (props) {
       )}
 
       <div className="profile-container">
-
-      <h3>Poject :  {project.name}</h3>
-
-      <ul className="products">
+      <ul className="tasks">
         {project.tasks.map(task => (
           <li key={task._id} >
-        <div className="product">
+        <div className="task">
             <div style={{ display:"flex"}}>
-            <p className="product-label">Name of task : </p>
-            <p className="product-value">{task.name}</p>
+            <p className="task-label">Name of task : </p>
+            <p className="task-value">{task.name}</p>
             </div>
 
             <div style={{ display:"flex"}}>
-            <p className="product-label">Assigned to : </p>
-            <p className="product-value">{task.worker}</p> 
+            <p className="task-label">Assigned to : </p>
+            <p className="task-value">{task.worker}</p> 
           </div>
 
          <div style={{ display:"flex"}}>
-            <p className="product-label">Current Status  :  </p>
-            <p className="product-value">{task.status}</p>
+            <p className="task-label">Current Status  :  </p>
+            <p className="task-value">{task.status}</p>
           </div>
 
           <div style={{ display:"flex"}}>
-            <p className="product-label">Description :  </p>
-            <p className="product-value">{task.description}</p>
+            <p className="task-label">Description :  </p>
+            <p className="task-value">{task.description}</p>
           </div>
 
           <div style={{ display:"flex"}}>
-            <p className="product-label">Start Date is :  </p>
-             <p className="product-value"> <Moment format="DD/MM/YYYY">{task.started}</Moment></p>
+            <p className="task-label">Start Date is :  </p>
+             <p className="task-value"> <Moment format="DD/MM/YYYY">{task.started}</Moment></p>
           </div>
 
           <div style={{ display:"flex"}}>
-            <p className="product-label">End Date : </p>
-             <p className="product-value"> <Moment format="DD/MM/YYYY">{task.end}</Moment></p>
+            <p className="task-label">End Date : </p>
+             <p className="task-value"> <Moment format="DD/MM/YYYY">{task.end}</Moment></p>
           </div>
             
             <div style={{ display:"flex"}}>
-              <FiTrash2 size={30} color="#a8a8b3" onClick={() => deleteHandler(task)} />
-              <FiEdit style={{marginLeft:"20px"}} size={30} color="#a8a8b3"  onClick={() => openModal(task)} />
+              <FiTrash2 size={30} color="#fd7014" onClick={() => deleteHandler(task)} />
+              <FiEdit style={{marginLeft:"20px"}} size={30} color="#045757"  onClick={() => openModal(task)} />
             </div>
    
         </div>

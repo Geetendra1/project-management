@@ -6,7 +6,7 @@ body{
   font: 1.6rem Helvetica;
   height: 100vh;
   margin: 0;
-  background-color: #1b262c;
+  /* background-color: #1b262c; */
 }
 #root {
   height:100%
@@ -147,7 +147,7 @@ a:hover{
   height: 32rem;
   border-radius: 10px;
   border-bottom: 0.1rem #c0c0c0 solid;
-  background-color: #1b262c;
+  /* background-color: #1b262c; */
 }
 .product {
   display: flex;
@@ -162,7 +162,7 @@ margin-left: 5px;
 }
 
 .product-value {
- color: white;
+ /* color: black; */
  margin-left: 10px;
  margin-right: 10px;
 }
@@ -234,36 +234,38 @@ margin-left: 5px;
 }
 
 /* tasks screen */
-.products {
+.tasks {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
 }
-.products li {
+.tasks li {
   list-style-type: none;
   padding: 0;
   flex: 0 1 34rem;
   margin: 1rem;
   height: 40rem;
+  max-width: 40rem;
+  max-width: 40rem;
   border-radius: 10px;
   border-bottom: 0.1rem #c0c0c0 solid;
-  background-color: #1b262c;
+  /* background-color: #1b262c; */
 }
-.product {
+.task {
   display: flex;
   flex-direction: column;
   /* justify-content: space-between; */
   height: 100%;
 }
-.product-label {
+.task-label {
 color: #e02041;
 margin-left: 5px;
 
 }
 
-.product-value {
- color: white;
+.task-value {
+ /* color: white; */
  margin-left: 10px;
  margin-right: 10px;
 }
@@ -275,10 +277,12 @@ margin-left: 5px;
 }
 
 .project-header{
-  font-size: 15px;
-  
+  font-size: 15px; 
 }
-
+.project-header h2{
+  
+  margin-left: 20px;
+}
 .project-image {
   height: 64px;
 }
@@ -375,7 +379,7 @@ margin-left: 5px;
   top: 1.5rem
 }
 
-/* Product Details */
+/* task Details */
 .details {
   display: flex;
   justify-content: space-between;

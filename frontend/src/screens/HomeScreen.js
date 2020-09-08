@@ -85,6 +85,7 @@ const openModal = (project) => {
     <div >
       <header className="project-header">
         {/* <img className="project-image" src={logoImg} alt="Be The Hero"/> */}
+        <h2>Projects</h2>
         { userInfo && userInfo.isAdmin && (
                 <Link className="profile-button" onClick={() => openModal({})}>
                   Create project
@@ -166,7 +167,6 @@ const openModal = (project) => {
       )}
 
       <div className="profile-container">
-      <h2>Projects</h2>
       <ul className="products">
           {products.map((product) => (
             <li key={product._id}>
@@ -198,9 +198,9 @@ const openModal = (project) => {
               </div>
 
                  <div style={{display:"flex"}}>
-             <Link to={"/tasks/" + product._id} color="#e02041"> <BiTask size={30}  />  </Link>
-              <FiEdit style={{marginLeft:"20px"}} size={30} color="#a8a8b3"  onClick={() => openModal(product)} />
-              <FiTrash2 style={{marginLeft:"20px"}} size={30} color="#a8a8b3" onClick={() => deleteHandler(product)} />
+             <Link to={"/tasks/" + product._id} color="#065471"> <BiTask size={30}  />  </Link>
+              <FiEdit style={{marginLeft:"20px"}} size={30} color="#045757"  onClick={() => openModal(product)} />
+              <FiTrash2 style={{marginLeft:"20px"}} size={30} color="#fd7014" onClick={() => deleteHandler(product)} />
             </div>
               </div>
             </li>
