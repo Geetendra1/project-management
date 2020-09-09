@@ -105,12 +105,12 @@ router.post('/', isAuth, isAdmin,  async (req,res) => {
     const userInfo = JSON.parse(req.cookies['userInfo'])
     const userName = userInfo.name
     console.log("name", userName);
-  const project = new Project({
+    const project = new Project({
     name: req.body.name,
     description:req.body.description,
     onwer:userName,
     started:req.body.started,
-    end:req.body.end
+    end:req.body.end,
   });
 
   console.log("owner",project.owner);
@@ -128,6 +128,21 @@ router.post('/', isAuth, isAdmin,  async (req,res) => {
    }
 })
 
+// ADD A MEMBER TO A PROJECT
+router.post('/:id/members' , isAuth, isAdmin, async (req,res) => {
+  const project = await Project.findById(req.params.id);
+console.log("project", project);
+  if(project) {
+    const member = {
+      name : req.body.name
+    }
+    project.teamMember.push(member)
+    const updatedProject = await project.save()
+    res.status(201).send({message: 'Member Added', data: updatedProject})
+  } else {
+    res.status(404).send({ message: 'Project Not Found or member not added' });
+  }
+})
 
 // GET ALL PROJECTS 
 router.get("/" , async (req,res) => {

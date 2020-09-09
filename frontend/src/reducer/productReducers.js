@@ -3,6 +3,8 @@ PRODUCT_DETAILS_REQUEST,PRODUCT_DETAILS_SUCCESS,PRODUCT_DETAILS_FAIL,
 PRODUCT_SAVE_REQUEST,PRODUCT_SAVE_SUCCESS,PRODUCT_SAVE_FAIL,
 PRODUCT_DELETE_REQUEST,PRODUCT_DELETE_SUCCESS,PRODUCT_DELETE_FAIL,
 ADMIN_PRODUCT_LIST_REQUEST,ADMIN_PRODUCT_LIST_SUCCESS,ADMIN_PRODUCT_LIST_FAIL,
+PROJECT_MEMBER_SAVE_REQUEST,PROJECT_MEMBER_SAVE_SUCCESS,PROJECT_MEMBER_SAVE_FAIL,PROJECT_MEMBER_SAVE_RESET,
+
 } from '../constants/productConstants'
 
 function productAdminListReducer(state = { products: [] }, action) {
@@ -72,5 +74,20 @@ function productDeleteReducer(state = { product: {} }, action) {
   }
 }
 
+function projectMemberSaveReducer(state = {}, action) {
+  switch (action.type) {
+    case PROJECT_MEMBER_SAVE_REQUEST:
+      return { loading: true };
+    case PROJECT_MEMBER_SAVE_SUCCESS:
+      return { loading: false, review: action.payload, success: true };
+    case PROJECT_MEMBER_SAVE_FAIL:
+      return { loading: false, errror: action.payload };
+    case PROJECT_MEMBER_SAVE_RESET:
+      return {};
+    default:
+      return state;
+  }
+}
 
-export  {productListReducer , productDetailsReducer,productSaveReducer,productDeleteReducer,productAdminListReducer}
+
+export  {productListReducer , productDetailsReducer,productSaveReducer,productDeleteReducer,productAdminListReducer,projectMemberSaveReducer}

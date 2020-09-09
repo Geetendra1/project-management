@@ -1,19 +1,24 @@
 import React,{ useEffect, useHistory, useState} from 'react';
 import { Link } from "react-router-dom";
-import {Modal} from 'react-bootstrap'
+// import {Modal} from 'react-bootstrap'
 import { FiPower, FiTrash2 , FiEdit} from 'react-icons/fi';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import {useSelector, useDispatch} from "react-redux";
-import {listProducts,saveProduct,deleteProduct,} from '../actions/productActions' 
+import {listProducts,saveProduct,deleteProduct,saveProjectMember} from '../actions/productActions' 
 import logoImg from '../assets/logo.svg';
 import { BiTask } from 'react-icons/bi';
 import Moment from 'react-moment'; 
+import {Modal, Button , Popover , OverlayTrigger,Form} from 'react-bootstrap'
+
+
+
 function HomeScreen(props) {
 const productList = useSelector(state => state.productList)
 const userSignin = useSelector(state=> state.userSignin);
 const {userInfo} = userSignin
 const {products, loading, error} = productList;
 const [modalVisible ,setModalVisible] = useState(false);
+const [show, setShow] = useState(false);
 const [id, setId] = useState('');
 const [name, setName] = useState('');
 const [description, setDescription] = useState('');
@@ -79,6 +84,9 @@ const openModal = (project) => {
   const deleteHandler = (product) => {
     dispatch(deleteProduct(product._id));
   };
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
     return loading ? <div>Loading...</div> :
     error ? <div>{error}</div> :
@@ -182,11 +190,6 @@ const openModal = (project) => {
                 <p className="product-value"> { product.description}</p>
               </div>
 
-              {/* <div style={{display:"flex"}}>
-                <p>Owner :</p>
-                <p> {product.owner}</p>
-              </div> */}
-
               <div style={{display:"flex"}}>
                 <p  className="product-label">start At :</p>
                  <p className="product-value"> <Moment format="DD/MM/YYYY">{product.started}</Moment></p>
@@ -197,10 +200,38 @@ const openModal = (project) => {
                 <p className="product-value"> <Moment format="DD/MM/YYYY">{product.end}</Moment></p>
               </div>
 
-                 <div style={{display:"flex"}}>
+            <div style={{display:"flex"}}>
              <Link to={"/tasks/" + product._id} color="#065471"> <BiTask size={30}  />  </Link>
+
               <FiEdit style={{marginLeft:"20px"}} size={30} color="#045757"  onClick={() => openModal(product)} />
+
               <FiTrash2 style={{marginLeft:"20px"}} size={30} color="#fd7014" onClick={() => deleteHandler(product)} />
+
+              <OverlayTrigger
+                trigger="click" 
+                placement="top"
+                overlay={
+                    <Popover id="popover-basic" style={{width:"30rem", backgroundColor:"teal"}}>
+                    <Popover.Title as="h3">{product.name}</Popover.Title>
+                    <Popover.Content>
+                   <Form>
+                      <Form.Group controlId="formBasicEmail" >
+                        <Form.Label>Name</Form.Label>
+                        <Form.Control type="name" placeholder="Enter name" />
+                          <Form.Text className="text-muted">
+                              We'll never share your email with anyone else.
+                          </Form.Text>
+                      </Form.Group>
+                        <Button variant="primary" type="submit">
+                            Submit
+                        </Button>
+                    </Form>
+                    </Popover.Content>
+                  </Popover>
+                }
+              >
+                <Button variant="secondary">Popover on </Button>
+              </OverlayTrigger>
             </div>
               </div>
             </li>

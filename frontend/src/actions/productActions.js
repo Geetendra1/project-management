@@ -3,7 +3,8 @@ PRODUCT_DETAILS_REQUEST,PRODUCT_DETAILS_SUCCESS,PRODUCT_DETAILS_FAIL,
 PRODUCT_SAVE_REQUEST,PRODUCT_SAVE_SUCCESS,PRODUCT_SAVE_FAIL,
 PRODUCT_DELETE_REQUEST,PRODUCT_DELETE_SUCCESS,PRODUCT_DELETE_FAIL,
 ADMIN_PRODUCT_LIST_REQUEST,ADMIN_PRODUCT_LIST_SUCCESS,ADMIN_PRODUCT_LIST_FAIL,
-MY_TASK_LIST_REQUEST,MY_TASK_LIST_SUCCESS,MY_TASK_LIST_FAIL
+MY_TASK_LIST_REQUEST,MY_TASK_LIST_SUCCESS,MY_TASK_LIST_FAIL,
+PROJECT_MEMBER_SAVE_REQUEST,PROJECT_MEMBER_SAVE_SUCCESS,PROJECT_MEMBER_SAVE_FAIL,
 } from '../constants/productConstants'
 import  axios  from "axios";
 import  Axios  from "axios";
@@ -81,5 +82,28 @@ const deleteProduct = (productId) => async (dispatch, getState) => {
   }
 };
 
+const saveProjectMember = (productId, member) => async (dispatch, getState) => {
+  try {
+    const {
+      userSignin: {
+        userInfo: { token },
+      },
+    } = getState();
+    dispatch({ type: PROJECT_MEMBER_SAVE_REQUEST, payload: member });
+    const { data } = await axios.post(
+      `/api/projects/${productId}/members`,
+      member,
+      {
+        headers: {
+          Authorization: 'Bearer ' + token,
+        },
+      }
+    );
+    dispatch({ type: PROJECT_MEMBER_SAVE_SUCCESS, payload: data });
+  } catch (error) {
+    // report error
+    dispatch({ type: PROJECT_MEMBER_SAVE_FAIL, payload: error.message });
+  }
+};
 
-export {listProducts, detailsProduct,saveProduct,deleteProduct}
+export {listProducts, detailsProduct,saveProduct,deleteProduct,saveProjectMember}
