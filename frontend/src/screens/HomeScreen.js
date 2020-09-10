@@ -24,8 +24,16 @@ const [name, setName] = useState('');
 const [description, setDescription] = useState('');
 const [started, setStarted] = useState('');
 const [end, setEnd] = useState('');
-
+const [membername, setMemberName] = useState('');
 const [uploading, setUploading] = useState(false);
+
+const projectMemberSave = useSelector((state) => state.projectMemberSave);
+const {
+  loading: loadingMemberSave,
+  success: successMemberSave,
+  error: errorMemberSave
+} = projectMemberSave
+
 
 const productSave = useSelector((state) => state.productSave);
   const {
@@ -41,6 +49,7 @@ const productDelete = useSelector((state) => state.productDelete);
     error: errorDelete,
   } = productDelete;
 
+
 const dispatch  = useDispatch()
 
   useEffect(() => {
@@ -51,12 +60,8 @@ const dispatch  = useDispatch()
     return () => {
       //
     };
-  }, [successSave,successDelete]);
+  }, [successSave,successDelete,successMemberSave]);
 
-    function handleLogout() {
-    localStorage.clear();
-    this.props.history.push('/');
-  }
 
 
 const openModal = (project) => {
@@ -79,7 +84,23 @@ const openModal = (project) => {
         end
       })
     );
+    console.log(id, name, description, started, end);
   };
+
+const openPoper = (project) => {
+  setId(project._id);
+}
+  const submitMemberHandler = (e) => {
+    e.preventDefault();
+    dispatch(
+      saveProjectMember({
+        _id:id,
+        membername,
+      })
+    )
+    console.log("frontend", membername);
+    console.log("frontend", id);
+  }
 
   const deleteHandler = (product) => {
     dispatch(deleteProduct(product._id));
@@ -93,6 +114,9 @@ const openModal = (project) => {
     <div >
       <header className="project-header">
         {/* <img className="project-image" src={logoImg} alt="Be The Hero"/> */}
+
+
+        
         <h2>Projects</h2>
         { userInfo && userInfo.isAdmin && (
                 <Link className="profile-button" onClick={() => openModal({})}>
@@ -100,7 +124,9 @@ const openModal = (project) => {
                 </Link>
         )}
       </header>
+
       
+     
       {modalVisible && (
         <div className="form">
           <form onSubmit={submitHandler}>
@@ -211,26 +237,26 @@ const openModal = (project) => {
                 trigger="click" 
                 placement="top"
                 overlay={
-                    <Popover id="popover-basic" style={{width:"30rem", backgroundColor:"teal"}}>
-                    <Popover.Title as="h3">{product.name}</Popover.Title>
-                    <Popover.Content>
-                   <Form>
+              <Popover id="popover-basic" style={{width:"30rem", backgroundColor:"teal"}}>
+              <Popover.Title as="h3">{product.name}</Popover.Title>
+              {product.teamMember.map((c,i) => (
+              <p> -> {c.name} (member)</p>
+            ))}
+                  <Popover.Content >
+                   <Form onSubmit={submitMemberHandler}>
                       <Form.Group controlId="formBasicEmail" >
-                        <Form.Label>Name</Form.Label>
-                        <Form.Control type="name" placeholder="Enter name" />
-                          <Form.Text className="text-muted">
-                              We'll never share your email with anyone else.
-                          </Form.Text>
+                        <Form.Label>Member Name</Form.Label>
+                        <Form.Control type="name" placeholder="Enter member name" onChange={(e) => setMemberName(e.target.value)}/>
                       </Form.Group>
                         <Button variant="primary" type="submit">
-                            Submit
+                            Add member
                         </Button>
                     </Form>
                     </Popover.Content>
                   </Popover>
                 }
               >
-                <Button variant="secondary">Popover on </Button>
+                <Button variant="secondary" onClick={() => openPoper(product)}>Add members </Button>
               </OverlayTrigger>
             </div>
               </div>

@@ -16,7 +16,7 @@ router.post('/', async (req,res) => {
         name:req.body.name,
         projectId:req.body.projectId,
         description:req.body.description,
-        worker:req.body.worker,
+        worker:req.body.worker ? req.body.worker : 'not assigned',
         status:req.body.status ,
         started:req.body.started,
         end:req.body.end
@@ -28,22 +28,22 @@ router.post('/', async (req,res) => {
         const newTask = await task.save()
         const worker = await User.findOne({"name":task.worker})
         console.log(worker);
-        if(currentuser.isAdmin) {
-              const msg = {
-                subject: 'Simple msg test',
-                html: `<p> New task has been assignemd to you by ${currentuser.name} This is for task : ${task.name}  </p>`
-              }
-            const mail = await sendEmail(worker.email, msg)
-            }
+        // if(currentuser.isAdmin) {
+        //       const msg = {
+        //         subject: 'Simple msg test',
+        //         html: `<p> New task has been assignemd to you by ${currentuser.name} This is for task : ${task.name}  </p>`
+        //       }
+        //     const mail = await sendEmail(worker.email, msg)
+        //     }
 
-         if(!currentuser.isAdmin) {
-              const adminEmail = 'sengargeetendra123@gmail.com'
-              const msg = {
-                subject: 'Updation Email ',
-                html: `<p> New updation has been done by ${currentuser.name} This is for task : ${task.name}  </p>`
-              }
-            const mail = await sendEmail(adminEmail, msg)
-            }
+        //  if(!currentuser.isAdmin) {
+        //       const adminEmail = 'sengargeetendra123@gmail.com'
+        //       const msg = {
+        //         subject: 'Updation Email ',
+        //         html: `<p> New updation has been done by ${currentuser.name} This is for task : ${task.name}  </p>`
+        //       }
+        //     const mail = await sendEmail(adminEmail, msg)
+        //     }
         if(newTask) {
             return res 
             .status(201)

@@ -158,7 +158,6 @@ a:hover{
 .product-label {
 color: #e02041;
 margin-left: 5px;
-
 }
 
 .product-value {
@@ -520,27 +519,27 @@ margin-left: 5px;
   margin-top: 0.6rem;
 }
 
-.form-label{
+/* .form-label{
   color: white;
 }
 
 .form-container h2 {
 color: white;
-}
+} */
 input {
   padding: 1rem;
   border: 0.1rem #c0c0c0 solid;
   border-radius: 0.5rem;
-  background-color: #4b5d67;
-  color: white;
+  /* background-color: #4b5d67; */
+  /* color: white; */
 }
 
 .form-container select {
   height: 40px;
   border: 0.1rem #c0c0c0 solid;
   border-radius: 4px;
-  background-color: #4b5d67;
-  color: white;
+  /* background-color: #4b5d67; */
+  /* color: white; */
 }
 /* Products */
 

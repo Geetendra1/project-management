@@ -108,12 +108,10 @@ router.post('/', isAuth, isAdmin,  async (req,res) => {
     const project = new Project({
     name: req.body.name,
     description:req.body.description,
-    onwer:userName,
     started:req.body.started,
     end:req.body.end,
   });
-
-  console.log("owner",project.owner);
+  console.log("routes",project.name, project.description);
   try {
     const newProject = await project.save()
     if(newProject) {
@@ -134,7 +132,7 @@ router.post('/:id/members' , isAuth, isAdmin, async (req,res) => {
 console.log("project", project);
   if(project) {
     const member = {
-      name : req.body.name
+      name : req.body.membername
     }
     project.teamMember.push(member)
     const updatedProject = await project.save()

@@ -24,6 +24,7 @@ const listProducts = () => async (dispatch) => {
 };
 
 const saveProduct = (product) => async (dispatch, getState) => {
+  console.log("first", product);
   try {
     dispatch({ type: PRODUCT_SAVE_REQUEST, payload: product });
     const {
@@ -35,7 +36,9 @@ const saveProduct = (product) => async (dispatch, getState) => {
           Authorization: 'Bearer ' + userInfo.token,
         },
       });
+      
       dispatch({ type: PRODUCT_SAVE_SUCCESS, payload: data });
+      console.log("actions",data);
     } else {
       const { data } = await Axios.put(
         '/api/projects/' + product._id,
@@ -82,23 +85,24 @@ const deleteProduct = (productId) => async (dispatch, getState) => {
   }
 };
 
-const saveProjectMember = (productId, member) => async (dispatch, getState) => {
+const saveProjectMember = (product) => async (dispatch, getState) => {
   try {
     const {
       userSignin: {
         userInfo: { token },
       },
     } = getState();
-    dispatch({ type: PROJECT_MEMBER_SAVE_REQUEST, payload: member });
+    dispatch({ type: PROJECT_MEMBER_SAVE_REQUEST, payload: product });
     const { data } = await axios.post(
-      `/api/projects/${productId}/members`,
-      member,
+      `/api/projects/${product._id}/members`,
+      product,
       {
         headers: {
           Authorization: 'Bearer ' + token,
         },
       }
     );
+    console.log("action",data);
     dispatch({ type: PROJECT_MEMBER_SAVE_SUCCESS, payload: data });
   } catch (error) {
     // report error

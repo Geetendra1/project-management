@@ -14,6 +14,7 @@ function TasksScreen (props) {
     const productDetails = useSelector(state => state.productDetails)
     const {userInfo} = userSignin
     const {project,loading,error} = productDetails;
+    console.log("tasks",project);
     const userList = useSelector(state => state.userList)
     const {users} = userList
     const projectid = props.match.params.id
@@ -109,7 +110,7 @@ function TasksScreen (props) {
                 <h2>Create/Edit Task </h2>
               </li>
               <li>
-                {loadingSave && <div>Loading...</div>}
+                {loadingSave && <div>Wait.. Email is being send . </div>}
                 {errorSave && <div>{errorSave}</div>}
               </li>
               
@@ -163,7 +164,7 @@ function TasksScreen (props) {
                           value={worker}
                           onChange={(e) => setWorker(e.target.value)}
                         >
-                          {users.map(user => (
+                          {project.teamMember.map(user => (
                             <option >{user.name}</option>
                           ))}
                         </select>
