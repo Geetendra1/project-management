@@ -36,27 +36,27 @@ function TaskScreen(props) {
           <li key={task._id} >
 
             <strong>NAME: {task.name}</strong>
-            {/* <p>{task.name}</p> */}
+          
        
 
             <strong>DESCRIPTION: {task.description}</strong>
-            {/* <p>{task.description}</p> */}
+          
 
             <strong>STATUS: {task.staus}</strong>
-            {/* <p>{task.staus}</p> */}
+         
 
             <strong>WORKER : {task.worker}</strong>
-            {/* <p>{task.worker}</p> */}
+           
 
             <strong>STARTING DATE : {task.started}</strong>
-            {/* <p>{task.started}</p> */}
+            
 
             <strong>END DATE: {task.end} </strong>
             {/* <p>{task.end}</p> */}
              <div style={{display:"flex"}}>
-             <Link to={"/tasks/" + task._id} color="#e02041"> <BiTask size={30}  />  </Link>
+             {/* <Link to={"/tasks/" + task._id} color="#e02041"> <BiTask size={30}  />  </Link> */}
               {/* <FiEdit style={{marginLeft:"20px"}} size={30} color="#a8a8b3"  onClick={() => openModal(task)} /> */}
-              <FiTrash2 style={{marginLeft:"20px"}} size={30} color="#a8a8b3" onClick={() => deleteHandler(task)} />
+              <FiTrash2 style={{marginLeft:"5px"}} size={30} color="#a8a8b3" onClick={() => deleteHandler(task)} />
             </div>
           </li>  
         ))}

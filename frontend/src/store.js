@@ -3,16 +3,11 @@ import { productListReducer,productDetailsReducer, productSaveReducer,productDel
 import {userSigninReducer, userRegisterReducer,userUpdateReducer,userListReducer,userForgotReducer,userResetReducer} from './reducer/userReducers'
 import {taskSaveReducer, taskDeleteReducer, myTaskListReducer,taskDetailsReducer} from './reducer/taskReducers'
 import Cookie from "js-cookie"
-import {cartReducer} from './reducer/cartReducers';
+
 import thunk from 'redux-thunk';
-import {
-  orderCreateReducer,
-  orderDetailsReducer,
-  orderPayReducer,
-  myOrderListReducer,
-  orderListReducer,
-  orderDeleteReducer,
-} from './reducer/orderReducers.js';const cartItems = Cookie.getJSON("cartItems") || [];
+
+
+const cartItems = Cookie.getJSON("cartItems") || [];
 const userInfo = Cookie.getJSON("userInfo") || null;
 
 
@@ -26,7 +21,7 @@ const reducer = combineReducers({
     productDelete:productDeleteReducer,
     projectMemberSave:projectMemberSaveReducer,
     
-    cart:cartReducer,
+    
 
     userSignin:userSigninReducer,
     userRegister:userRegisterReducer,
@@ -35,12 +30,6 @@ const reducer = combineReducers({
     userUpdate: userUpdateReducer,
     userReset:userResetReducer,
     
-    orderCreate:orderCreateReducer,
-    orderDetails:orderDetailsReducer,
-    orderPay: orderPayReducer,
-    myOrderList: myOrderListReducer,
-    orderList: orderListReducer,
-    orderDelete: orderDeleteReducer,
 
     taskSave:taskSaveReducer,
     taskDelete:taskDeleteReducer,

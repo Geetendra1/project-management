@@ -98,8 +98,6 @@ const openPoper = (project) => {
         membername,
       })
     )
-    console.log("frontend", membername);
-    console.log("frontend", id);
   }
 
   const deleteHandler = (product) => {
@@ -113,10 +111,7 @@ const openPoper = (project) => {
     error ? <div>{error}</div> :
     <div >
       <header className="project-header">
-        {/* <img className="project-image" src={logoImg} alt="Be The Hero"/> */}
-
-
-        
+               
         <h2>Projects</h2>
         { userInfo && userInfo.isAdmin && (
                 <Link className="profile-button" onClick={() => openModal({})}>
@@ -256,7 +251,7 @@ const openPoper = (project) => {
                   </Popover>
                 }
               >
-                <Button variant="secondary" onClick={() => openPoper(product)}>Add members </Button>
+                <Button variant="primary" onClick={() => openPoper(product)}>Members </Button>
               </OverlayTrigger>
             </div>
               </div>

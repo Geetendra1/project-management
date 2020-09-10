@@ -110,7 +110,7 @@ if(task) {
   task.end = req.body.end || task.end
   const updatedtask = await task.save();
   const worker = await User.findOne({"name":task.worker})
-
+console.log("worker name",worker);
   if(currentuser.isAdmin) {
     const msg = {
       subject: 'Simple msg test',
