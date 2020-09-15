@@ -96,6 +96,7 @@ router.get('/:id',  async (req,res) => {
 // DELETE PROJECT
 router.delete('/:id', isAuth , isAdmin, async (req,res) => {
   const deleteProject = await Project.findById({_id:req.params.id});
+  const deleteTasks = await Task.findById({"projectId":req.params.id})
   if(deleteProject) {
     await deleteProject.remove()
     res.send({message:"Project Deleted"})

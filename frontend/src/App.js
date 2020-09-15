@@ -35,7 +35,7 @@ const  closeMenu = () =>  {
         <button onClick={openMenu}>
           &#9776;
         </button>
-        <Link to="/">Something </Link>
+        <Link to="/">Project Manager </Link>
       </div>
       <div className="header-links">
        

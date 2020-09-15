@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser')
 const router = express.Router();
 
 // CREATE TASK
-router.post('/', async (req,res) => {
+router.post('/',isAuth, isAdmin , async (req,res) => {
   const project = await Project.findById(req.body.projectId);
   const userInfo = JSON.parse(req.cookies['userInfo'])
   const currentuser = userInfo
@@ -16,7 +16,7 @@ router.post('/', async (req,res) => {
         name:req.body.name,
         projectId:req.body.projectId,
         description:req.body.description,
-        worker:req.body.worker ? req.body.worker : 'not assigned',
+        worker:req.body.worker ,
         status:req.body.status ,
         started:req.body.started,
         end:req.body.end
@@ -87,6 +87,7 @@ router.get('/:id',  async (req,res) => {
 router.delete('/:id', async (req,res) => {
   const deleteTask = await Task.findById({_id:req.params.id});
   // const deleteTaskfromTask = await Task.findById({_id:req.params.id});
+
   if(deleteTask) {
     await deleteTask.remove()
     res.send({message:"Task Deleted"})

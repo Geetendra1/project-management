@@ -534,12 +534,10 @@ input {
   /* color: white; */
 }
 
-.form-container select {
+.form-container select{
   height: 40px;
   border: 0.1rem #c0c0c0 solid;
   border-radius: 4px;
-  /* background-color: #4b5d67; */
-  /* color: white; */
 }
 /* Products */
 

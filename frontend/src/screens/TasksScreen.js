@@ -164,6 +164,7 @@ function TasksScreen (props) {
                           value={worker}
                           onChange={(e) => setWorker(e.target.value)}
                         >
+                        <option >member list</option>
                           {project.teamMember.map(user => (
                             <option >{user.name}</option>
                           ))}
