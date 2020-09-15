@@ -46,7 +46,7 @@ function ProfileScreen(props) {
           <ul className="form-container">
             <li>
               
-              <h2>{userInfo.name} : User Profile</h2>
+              <h2>{userInfo.name} </h2>
             </li>
             <li>
               {loading && <div>Loading...</div>}

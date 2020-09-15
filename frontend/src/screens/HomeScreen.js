@@ -251,7 +251,7 @@ const openPoper = (project) => {
                   </Popover>
                 }
               >
-                <Button variant="primary" onClick={() => openPoper(product)}>Members </Button>
+                <Button variant="primary" onClick={() => openPoper(product)}> Members </Button>
               </OverlayTrigger>
             </div>
               </div>
